@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 
 
 public class TigerHash 
@@ -28,14 +28,17 @@ public class TigerHash
         byte[] stringToDecimal = System.Text.Encoding.UTF8.GetBytes(myWord);
         Console.WriteLine("Байты: " + ToHex(stringToDecimal));
         byte[] SBlocksResult = SBlocks(stringToDecimal);
-        Console.WriteLine("S Blocks " + ToHex(SBlocksResult));
+        Console.WriteLine("S Blocks: " + ToHex(SBlocksResult));
         byte[] permutation = Permutation(SBlocksResult);
         Console.WriteLine("Результат после перестановок: " + ToHex(permutation));
         byte[] afterShift = BitShift(permutation);
         Console.WriteLine("Результат после сдвига: " + ToHex(afterShift));
         byte[] fstXor = FirstXor(afterShift);
-        Console.WriteLine("Результат после побитового сложения: " + ToHex(fstXor));
-
+        Console.WriteLine("Результат после побитового сложения 1: " + ToHex(fstXor));
+        byte[] secXor = SecondXor(fstXor);
+        Console.WriteLine("Результат после побитового сложения 2: " + ToHex(secXor));
+        byte[] thrXor = ThirdXor(secXor);
+        Console.WriteLine("Результат после побитового сложения 3: " + ToHex(thrXor));
     }
 
     private static string ToHex(byte[] input) 
@@ -69,7 +72,7 @@ public class TigerHash
         byte[] result = new byte[input.Length];
         for (int i = 0; i < input.Length; i++)
         {
-            result[i] = (byte)((input[i] & 0xFF) << 2);
+            result[i] = (byte)(input[i] << 2);
         }
         return result;
     }
@@ -84,5 +87,22 @@ public class TigerHash
         return result;
     }
 
-   
+    private static byte[] SecondXor(byte[] input) 
+    {
+        byte[] result = new byte[input.Length];
+        for (int i = 0; i < H1.Length; i++)
+        {
+            result[i] = (byte)(input[i] ^ H1[i]);
+        }
+        return result;
+    }
+    private static byte[] ThirdXor(byte[] input) 
+    {
+        byte[] result = new byte[input.Length];
+        for (int i = 0; i < H2.Length; i++)
+        {
+            result[i] = (byte)(input[i] ^ H2[i]);
+        }
+        return result;
+    }
 }

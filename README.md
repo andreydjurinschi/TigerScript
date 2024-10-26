@@ -1,3 +1,3 @@
 
-# Nikitos
-## этот ебучий скрипт в папке TigerScript, файл Program.cs
+# Nikitos, script v papke Tiger
+

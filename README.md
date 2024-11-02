@@ -1,3 +1,3 @@
 
-# Nikitos, script v papke Tiger
+# Tiger hash first raund
 
